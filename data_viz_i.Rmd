@@ -1,0 +1,60 @@
+---
+title: "Viz I"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggridges)
+library(p8105.datasets)
+```
+
+Import the weather data
+
+```{r}
+data("weather_df")
+
+```
+
+```{r}
+weather_df
+```
+
+## Scatterplots
+
+Create my first scatterplot ever
+
+```{r}
+ggplot(weather_df, aes(x = tmin, y = tmax )) +
+  geom_point()
+```
+
+New approach, same plot
+
+```{r}
+weather_df %>% 
+  ggplot(aes(x = tmin, y = tmax)) +
+  geom_point()
+```
+
+Save and edit a plot object
+
+```{r}
+weather_plot <- 
+  weather_df %>% 
+  ggplot(aes(x = tmin, y = tmax))
+
+weather_plot + geom_point()
+```
+
+## Asvanced scatterplot
+
+Start with the same one and make it fancy!
+
+```{r}
+weather_df %>% 
+  ggplot(aes(x = tmin, y = tmax, color = name)) +
+  geom_point() + 
+  geom_smooth(se = FALSE)
+```
+
