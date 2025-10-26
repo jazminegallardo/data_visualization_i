@@ -159,7 +159,9 @@ weather_df %>%
 
 ![](data_viz_ii_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-Change overall theme. \### theme_minimal() \### theme_bw()
+Change overall theme.
+
+theme_minimal() theme_bw()
 
 ``` r
 weather_df %>% 
@@ -182,7 +184,7 @@ weather_df %>%
 
 ![](data_viz_ii_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-### ggplot has its own themes
+ggplot has its own themes
 
 ``` r
 weather_df %>% 
@@ -212,3 +214,76 @@ weather_df %>%
     ## (`geom_point()`).
 
 ![](data_viz_ii_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+If you want to use themes and change positions, the theme must come
+first
+
+``` r
+weather_df %>% 
+  ggplot(aes(x = tmin, y = tmax, color = name)) + 
+  geom_point(alpha = .5) +
+  labs(
+    title = "Temperature plot",
+    x = "Minimum daily temperature (C)",
+    y = "Maximum daily temperature (C)",
+    caption = "Data from rnoaa package, temperature in 2017."
+  ) +
+  viridis::scale_color_viridis(
+    name = "Location",
+    discrete = TRUE) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](data_viz_ii_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+## Setting options
+
+will generally copy and paste these into the top of an r markdown
+document
+
+``` r
+library(tidyverse)
+
+knitr::opts_chunk$set(
+  fig.width = 6,
+  fig.asp = .6,
+  out.width = "90%"
+)
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+
+scale_colour_discrete = scale_color_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+  
+)
+```
+
+## Data args in `geom`
+
+``` r
+central_park_df = 
+  weather_df %>%  
+  filter(name == "CentralPark_NY")
+
+molokai_df = 
+  weather_df %>%  
+  filter(name == "Molokai_HI")
+
+ggplot(data = molokai_df, aes(x = date, y = tmax, color = name)) + 
+  geom_point() + 
+  geom_line(data = central_park_df) 
+```
+
+    ## Warning: Removed 1 row containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](data_viz_ii_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
