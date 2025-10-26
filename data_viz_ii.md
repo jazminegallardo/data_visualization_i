@@ -342,3 +342,55 @@ tmax_tmin_p / (prcp_dens_p + tmax_date_p)
     ## (`geom_point()`).
 
 ![](data_viz_ii_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+## Data manipulation
+
+Control your factors.
+
+``` r
+weather_df %>% 
+  mutate(
+    name = factor(name),
+    name = forcats::fct_relevel(name, c("Molokai_HI"))
+  ) %>% 
+  ggplot(aes(x = name, y = tmax, fill = name)) +
+  geom_violin(alpha = .5)
+```
+
+    ## Warning: Removed 17 rows containing non-finite outside the scale range
+    ## (`stat_ydensity()`).
+
+![](data_viz_ii_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+
+What if I wanted densities for tmin and tmax simultaneously?
+
+``` r
+weather_df %>% 
+  filter(name == "CentralPark_NY") %>% 
+  pivot_longer(
+    tmax:tmin,
+    names_to = "observation",
+    values_to = "temperatures"
+  ) %>% 
+  ggplot(aes(x = temperatures, fill = observation)) + 
+  geom_density(alpha = .5)
+```
+
+![](data_viz_ii_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+
+``` r
+weather_df %>% 
+  pivot_longer(
+    tmax:tmin,
+    names_to = "observation",
+    values_to = "temperatures"
+  ) %>% 
+  ggplot(aes(x = temperatures, fill = observation)) + 
+  geom_density(alpha = .5) +
+  facet_grid(. ~ name)
+```
+
+    ## Warning: Removed 34 rows containing non-finite outside the scale range
+    ## (`stat_density()`).
+
+![](data_viz_ii_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
