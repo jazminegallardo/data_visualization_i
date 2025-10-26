@@ -133,3 +133,82 @@ weather_df %>%
     ## (`geom_point()`).
 
 ![](data_viz_ii_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+## Themes
+
+Shift the legend.
+
+``` r
+weather_df %>% 
+  ggplot(aes(x = tmin, y = tmax, color = name)) + 
+  geom_point(alpha = .5) +
+  labs(
+    title = "Temperature plot",
+    x = "Minimum daily temperature (C)",
+    y = "Maximum daily temperature (C)",
+    caption = "Data from rnoaa package, temperature in 2017."
+  ) +
+  viridis::scale_color_viridis(
+    name = "Location",
+    discrete = TRUE) +
+  theme(legend.position = "bottom")
+```
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](data_viz_ii_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+Change overall theme. \### theme_minimal() \### theme_bw()
+
+``` r
+weather_df %>% 
+  ggplot(aes(x = tmin, y = tmax, color = name)) + 
+  geom_point(alpha = .5) +
+  labs(
+    title = "Temperature plot",
+    x = "Minimum daily temperature (C)",
+    y = "Maximum daily temperature (C)",
+    caption = "Data from rnoaa package, temperature in 2017."
+  ) +
+  viridis::scale_color_viridis(
+    name = "Location",
+    discrete = TRUE) +
+  theme_minimal()
+```
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](data_viz_ii_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+### ggplot has its own themes
+
+``` r
+weather_df %>% 
+  ggplot(aes(x = tmin, y = tmax, color = name)) + 
+  geom_point(alpha = .5) +
+  labs(
+    title = "Temperature plot",
+    x = "Minimum daily temperature (C)",
+    y = "Maximum daily temperature (C)",
+    caption = "Data from rnoaa package, temperature in 2017."
+  ) +
+  viridis::scale_color_viridis(
+    name = "Location",
+    discrete = TRUE) +
+  ggthemes::theme_clean()
+```
+
+    ## Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
+    ## ℹ Please use the `linewidth` argument instead.
+    ## ℹ The deprecated feature was likely used in the ggthemes package.
+    ##   Please report the issue at <https://github.com/jrnold/ggthemes/issues>.
+    ## This warning is displayed once every 8 hours.
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
+    ## Warning: Removed 17 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+![](data_viz_ii_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
